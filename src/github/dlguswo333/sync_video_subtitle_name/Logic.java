@@ -1,4 +1,4 @@
-package sync.files;
+package github.dlguswo333.sync_video_subtitle_name;
 
 import java.io.File;
 import java.io.IOException;
