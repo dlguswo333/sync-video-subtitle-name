@@ -68,7 +68,7 @@ public class Main {
         var videoFiles = getVideoFiles(path.toFile());
         var subtitleFiles = getSubtitleFiles(path.toFile());
         if (videoFiles.size() == 0 || subtitleFiles.size() == 0) {
-            System.out.println("No" + (videoFiles.size() == 0 ? "video" : "subtitle") + " file detected.");
+            System.out.println("No " + (videoFiles.size() == 0 ? "video" : "subtitle") + " file detected.");
             System.exit(1);
             return;
         }
