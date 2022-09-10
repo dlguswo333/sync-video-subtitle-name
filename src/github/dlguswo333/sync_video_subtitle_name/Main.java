@@ -67,6 +67,12 @@ public class Main {
 
         var videoFiles = getVideoFiles(path.toFile());
         var subtitleFiles = getSubtitleFiles(path.toFile());
+        if (videoFiles.size() == 0 || subtitleFiles.size() == 0) {
+            System.out.println("No" + (videoFiles.size() == 0 ? "video" : "subtitle") + " file detected.");
+            System.exit(1);
+            return;
+        }
+
         Synchronizer logic = new Synchronizer(videoFiles, subtitleFiles);
         System.out.println("Insert a number starting from left. Input non-number key if you want to abort.");
         int input = 1;
@@ -80,14 +86,8 @@ public class Main {
             System.exit(1);
             return;
         }
-        if (input < 0) {
-            System.out.println("Input value not valid!");
-            System.exit(1);
-            return;
-        }
-
-        if (subtitleFiles.size() == 0) {
-            System.out.println("No subtitle file detected.");
+        if (!(1 <= input && input <= 9)) {
+            System.out.println("Aborted synchronization.");
             return;
         }
 
