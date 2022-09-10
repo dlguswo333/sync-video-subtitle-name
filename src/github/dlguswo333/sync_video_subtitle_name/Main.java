@@ -65,7 +65,7 @@ public class Main {
 
         var videoFiles = getVideoFiles(path.toFile());
         var subtitleFiles = getSubtitleFiles(path.toFile());
-        Logic logic = new Logic(videoFiles, subtitleFiles);
+        Synchronizer logic = new Synchronizer(videoFiles, subtitleFiles);
         System.out.println("Insert a number starting from left. Input non-number key if you want to abort.");
         int input = 1;
         try {

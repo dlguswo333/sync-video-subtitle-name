@@ -8,7 +8,7 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Logic {
+public class Synchronizer {
     private ArrayList<File> videoFiles;
     private ArrayList<File> subtitleFiles;
     // TODO It will be more performant if indices structure is in hashmap.
@@ -16,7 +16,7 @@ public class Logic {
     private ArrayList<Integer> subtitleIndices;
     private ArrayList<String> newSubtitleNames = new ArrayList<>();
 
-    public Logic(ArrayList<File> videoFiles, ArrayList<File> subtitleFiles) {
+    public Synchronizer(ArrayList<File> videoFiles, ArrayList<File> subtitleFiles) {
         this.videoFiles = videoFiles;
         this.subtitleFiles = subtitleFiles;
     }
