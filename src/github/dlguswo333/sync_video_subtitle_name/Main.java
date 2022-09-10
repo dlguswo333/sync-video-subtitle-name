@@ -2,7 +2,6 @@ package github.dlguswo333.sync_video_subtitle_name;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -55,8 +54,11 @@ public class Main {
         } else {
             try {
                 path = Paths.get(args[0]);
-            } catch (InvalidPathException e) {
-                System.out.println("Oops! Something went wrong!");
+                if (!path.toFile().exists() || !path.toFile().isDirectory()) {
+                    throw new RuntimeException();
+                }
+            } catch (Exception e) {
+                System.out.println("Argument path is not valid!");
                 System.exit(1);
                 return;
             }
