@@ -78,7 +78,12 @@ public class Synchronizer {
         for (int s = 0; s < subtitleFiles.size() && s < newSubtitleNames.size(); s++) {
             var subtitleFile = subtitleFiles.get(s);
             var newSubtitleFileName = newSubtitleNames.get(s);
-            subtitleFile.renameTo(new File(parentPath, newSubtitleFileName));
+            if (!subtitleFile.renameTo(new File(parentPath, newSubtitleFileName))) {
+                System.out.println("\nRenaming " + subtitleFile.getName() + " failed.");
+                System.out.println("Check if there is an existing file with the same name.");
+                return false;
+            }
         }
+        return true;
     }
 }
