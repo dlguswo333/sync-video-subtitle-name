@@ -25,51 +25,39 @@ public class Synchronizer {
         ArrayList<Integer> indices = new ArrayList<>();
         Pattern pattern = Pattern.compile("(\\d+)");
         for (var file : files) {
-            Matcher matcher = pattern.matcher(getFileNameWithoutExtension(file));
+            Matcher matcher = pattern.matcher(FileUtil.getFileNameWithoutExtension(file));
             int index = -1;
             var results = matcher.results();
             if (results != null) {
                 var groups = results.map(MatchResult::group).toArray();
                 if (groups.length <= number) {
-                    throw new RuntimeException("Cannot find number");
+                    throw new RuntimeException("Cannot find number in file: " + file.getName());
                 }
                 index = Integer.parseInt((String) groups[number]);
                 indices.add(index);
             } else {
-                throw new RuntimeException("Cannot find number");
+                throw new RuntimeException("Cannot find number in file: " + file.getName());
             }
         }
         return indices;
     }
 
-    private String getFileNameWithoutExtension(File file) {
-        var name = file.getName();
-        name = name.substring(0, name.lastIndexOf('.'));
-        return name;
-    }
-
-    private String getFileExtension(File file) {
-        var name = file.getName();
-        var extension = name.substring(name.lastIndexOf('.') + 1);
-        return extension;
-    }
-
-    private String getNewSubtitleFileName(File subtitleFile, File videoFile) {
-        var videoNameWithoutExtension = getFileNameWithoutExtension(videoFile);
-        var newSubtitleFileName = videoNameWithoutExtension + "." + getFileExtension(subtitleFile);
-        return newSubtitleFileName;
-    }
-
-    public void convert(int number) throws RuntimeException {
+    public boolean convert(int number) throws RuntimeException {
         var parentPath = Paths.get(subtitleFiles.get(0).getAbsolutePath()).getParent().toString();
+        try {
         videoIndices = getIndices(number, videoFiles);
         subtitleIndices = getIndices(number, subtitleFiles);
+        } catch (RuntimeException e) {
+            return false;
+        }
         for (int s = 0; s < subtitleFiles.size(); ++s) {
             var subtitleFile = subtitleFiles.get(s);
             for (int v = 0; v < videoIndices.size(); ++v) {
                 if (subtitleIndices.get(s) == videoIndices.get(v)) {
                     var videoFile = videoFiles.get(v);
-                    var newSubtitleFileName = getNewSubtitleFileName(subtitleFile, videoFile);
+                    var newSubtitleFileName = FileUtil.getNewFileNameWithExtensionRetained(
+                            subtitleFile,
+                            FileUtil.getFileNameWithoutExtension(videoFile));
                     System.out.println(subtitleFile.getName() + " -> " + newSubtitleFileName);
                     newSubtitleNames.add(newSubtitleFileName);
                     break;
