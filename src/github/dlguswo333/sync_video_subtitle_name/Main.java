@@ -74,7 +74,8 @@ public class Main {
         }
 
         Synchronizer logic = new Synchronizer(videoFiles, subtitleFiles);
-        System.out.println("Insert a number starting from left. Input non-number key if you want to abort.");
+        System.out.println(
+                "Insert the index of number in file names starting from left. Input non-number key if you want to cancel.");
         int input = 1;
         try {
             input = readKey();
@@ -87,13 +88,17 @@ public class Main {
             return;
         }
         if (!(1 <= input && input <= 9)) {
-            System.out.println("Aborted synchronization.");
+            System.out.println("Cancelled synchronization.");
             return;
         }
 
         try {
-            logic.convert(input);
-        } catch (Exception e) {
+            if (logic.convert(input)) {
+                System.out.println("Synchronization completed.");
+            } else {
+                System.out.println("Synchronization cancelled.");
+            }
+        } catch (RuntimeException e) {
             System.out.println("Oops! Something went wrong!");
             System.exit(1);
             return;
