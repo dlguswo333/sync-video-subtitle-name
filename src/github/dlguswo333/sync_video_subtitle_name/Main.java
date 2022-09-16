@@ -87,7 +87,7 @@ public class Main {
             System.exit(1);
             return;
         }
-        if (!(1 <= input && input <= 9)) {
+        if (!(0 <= input && input <= 8)) {
             System.out.println("Cancelled synchronization.");
             return;
         }
