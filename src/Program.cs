@@ -1,9 +1,9 @@
-
-// Get videos and subtitles from the current path.
+﻿// Get videos and subtitles from the current path.
 SVSN.IFileReader fileReader = new SVSN.FileReader();
 
 var files = fileReader.Read(".");
 if (files is null) {
+    Console.WriteLine("Could not read the current working directory.");
     return;
 }
 
