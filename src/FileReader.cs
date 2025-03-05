@@ -1,19 +1,14 @@
 namespace SVSN;
 
-class FileReadResult {
-    public required string[] Videos;
-    public required string[] Subtitles;
-}
-
 interface IFileReader {
-    public FileReadResult? Read(string path);
+    public Files? Read(string path);
 }
 
 class FileReader : IFileReader {
     static private readonly string[] VideoExtensions = ["avi", "mp4", "mkv", "m4v", "mov"];
     static private readonly string[] SubtitleExtensions = ["smi", "ass"];
 
-    public FileReadResult? Read(string path) {
+    public Files? Read(string path) {
         try {
             if (!Directory.Exists(path)) {
                 return null;
@@ -30,7 +25,7 @@ class FileReader : IFileReader {
                     subtitles.Add(fileName);
                 }
             }
-            var fileResult = new FileReadResult() { Videos = videos.ToArray(), Subtitles = subtitles.ToArray() };
+            var fileResult = new Files() { Videos = videos.ToArray(), Subtitles = subtitles.ToArray() };
             return fileResult;
         } catch (Exception e) {
             Console.WriteLine(e);
