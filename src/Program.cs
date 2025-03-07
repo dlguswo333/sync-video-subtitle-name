@@ -7,19 +7,24 @@ if (files is null) {
     return;
 }
 
-Console.WriteLine(string.Join(" ", files.Videos));
-Console.WriteLine(string.Join(" ", files.Subtitles));
-
-// Get Map<oldSubtitleName, newSubtitleName>
-SVSN.IMapper mapper = new SVSN.Mapper();
-
-var mapResult = mapper.Map(files);
-Console.WriteLine($"mapResult count: {mapResult.Count()}");
-foreach(var pair in mapResult) {
-    Console.WriteLine($"{pair.Key}: {pair.Value}");
+Console.WriteLine($"{files.Videos.Length} video(s) and {files.Subtitles.Length} subtitle(s) found.");
+if (files.Videos.Length == 0 || files.Subtitles.Length == 0) {
+    return;
 }
 
+// Get Map<subtitle, video>
+SVSN.IMapper mapper = new SVSN.Mapper();
+var mapResult = mapper.Map(files);
+if (mapResult.Count() == 0){
+    Console.WriteLine("Could not find any feasible file name synchronization.");
+    return;
+}
+
+
 Console.WriteLine("The following changes will be applied.");
+foreach(var pair in mapResult) {
+    Console.WriteLine($"{pair.Key} -> {pair.Value}");
+}
 Console.WriteLine("Do you really want to continue? y/n");
 
 var userInput = Console.ReadKey(false);
