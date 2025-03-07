@@ -20,14 +20,22 @@ if (mapResult.Count() == 0){
     return;
 }
 
-
 Console.WriteLine("The following changes will be applied.");
 foreach(var pair in mapResult) {
     Console.WriteLine($"{pair.Key} -> {pair.Value}");
 }
 Console.WriteLine("Do you really want to continue? y/n");
 
-var userInput = Console.ReadKey(false);
+var userInput = Console.ReadKey(true);
 if (userInput.Key == ConsoleKey.Y) {
-    Console.WriteLine("Okay");
+    Console.WriteLine("Renaming subtitle(s)...");
+    foreach(var pair in mapResult) {
+        var subtitle = pair.Key;
+        var video = pair.Value;
+        var videoName = Path.GetFileNameWithoutExtension(video);
+        var subtitleExt = Path.GetExtension(subtitle);
+        var newSubtitleName = $"{videoName}{subtitleExt}";
+        File.Move(subtitle, newSubtitleName);
+    }
 }
+Console.WriteLine();
