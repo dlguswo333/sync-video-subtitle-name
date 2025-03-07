@@ -13,7 +13,11 @@ Console.WriteLine(string.Join(" ", files.Subtitles));
 // Get Map<oldSubtitleName, newSubtitleName>
 SVSN.IMapper mapper = new SVSN.Mapper();
 
-mapper.Map();
+var mapResult = mapper.Map(files);
+Console.WriteLine($"mapResult count: {mapResult.Count()}");
+foreach(var pair in mapResult) {
+    Console.WriteLine($"{pair.Key}: {pair.Value}");
+}
 
 Console.WriteLine("The following changes will be applied.");
 Console.WriteLine("Do you really want to continue? y/n");
