@@ -20,10 +20,10 @@ public class Mapper : IMapper {
         var mapResult = new SortedDictionary<string, string>();
         var isVideosMapped = new bool[files.Videos.Length];
 
-        for(int i = 0;i < files.Subtitles.Length;++i) {
+        for (int i = 0; i < files.Subtitles.Length; ++i) {
             var subtitle = files.Subtitles[i];
             var distinctNumInSubtitle = distinctNumsInSubtitles[i];
-            for (int j = 0;j < files.Videos.Length;++j) {
+            for (int j = 0; j < files.Videos.Length; ++j) {
                 var video = files.Videos[j];
                 var distinctNumInVideo = distinctNumsInVideos[j];
                 if (distinctNumInVideo != distinctNumInSubtitle) {
@@ -56,9 +56,9 @@ public class Mapper : IMapper {
     private double GetMostDistinctNum(double[] nums, double[][] numsArray) {
         int[] occurrenceInOtherNums = new int[nums.Length];
         double mostDistinctNum;
-        for (int i = 0;i < nums.Length;++i) {
+        for (int i = 0; i < nums.Length; ++i) {
             var num = nums[i];
-            for (int j = 0;j < numsArray.Length;++j) {
+            for (int j = 0; j < numsArray.Length; ++j) {
                 if (nums == numsArray[j]) {
                     continue;
                 }
@@ -69,7 +69,7 @@ public class Mapper : IMapper {
         var numsCntWithMinOccurrence = occurrenceInOtherNums.Count(
             value => value == occurrenceInOtherNums.Min()
         );
-        if (numsCntWithMinOccurrence == 1){
+        if (numsCntWithMinOccurrence == 1) {
             var minOccurrenceInd = Array.IndexOf(occurrenceInOtherNums, occurrenceInOtherNums.Min());
             mostDistinctNum = nums[minOccurrenceInd];
             return mostDistinctNum;
@@ -82,7 +82,7 @@ public class Mapper : IMapper {
         // In this case, we get the number with the most occurrence in 'nums' array.
         var numsWithOccurrence = nums.Distinct().ToDictionary(v => nums.Count(_v => _v == v));
         var candidateNum = new KeyValuePair<double, int>(double.NaN, 0);
-        for(int i = 0;i < nums.Length;++i) {
+        for (int i = 0; i < nums.Length; ++i) {
             var num = nums[i];
             if (occurrenceInOtherNums[i] > occurrenceInOtherNums.Min()) {
                 continue;

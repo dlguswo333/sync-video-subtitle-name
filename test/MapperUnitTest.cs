@@ -1,10 +1,8 @@
 namespace test;
 
-public class MapperUnitTest
-{
+public class MapperUnitTest {
     [Fact]
-    public void Test1()
-    {
+    public void Test1() {
         string[] videos = [
             "video01.mp4",
             "video02.mp4",
@@ -17,12 +15,12 @@ public class MapperUnitTest
             "subtitle3.smi",
             "subtitle4.smi",
         ];
-        var files = new SVSN.Files() {Videos = videos, Subtitles = subtitles};
+        var files = new SVSN.Files() { Videos = videos, Subtitles = subtitles };
         var mapper = new SVSN.Mapper();
         var mapResult = mapper.Map(files);
 
         Assert.Equal(4, mapResult.Count);
-        for(int i = 0;i < 4;++i) {
+        for (int i = 0; i < 4; ++i) {
             var video = videos[i];
             var subtitle = subtitles[i];
             Assert.Equal(mapResult[subtitle], video);
@@ -30,8 +28,7 @@ public class MapperUnitTest
     }
 
     [Fact]
-    public void Test2()
-    {
+    public void Test2() {
         string[] videos = [
             "video01.mp4",
             "video02.mp4",
@@ -42,12 +39,12 @@ public class MapperUnitTest
             "subtitle2.smi",
             "subtitle3.smi",
         ];
-        var files = new SVSN.Files() {Videos = videos, Subtitles = subtitles};
+        var files = new SVSN.Files() { Videos = videos, Subtitles = subtitles };
         var mapper = new SVSN.Mapper();
         var mapResult = mapper.Map(files);
 
         Assert.Equal(2, mapResult.Count);
-        for(int i = 0;i < 2;++i) {
+        for (int i = 0; i < 2; ++i) {
             var video = videos[i];
             var subtitle = subtitles[i];
             Assert.Equal(mapResult[subtitle], video);
@@ -57,8 +54,7 @@ public class MapperUnitTest
     }
 
     [Fact]
-    public void Test3()
-    {
+    public void Test3() {
         string[] videos = [
             "awesome drama S01E01.mp4",
             "awesome drama S01E02.mp4",
@@ -68,7 +64,7 @@ public class MapperUnitTest
             "Awesome_drama season_1 episode_1.ass",
             "Awesome_drama season_1 episode_3.ass",
         ];
-        var files = new SVSN.Files() {Videos = videos, Subtitles = subtitles};
+        var files = new SVSN.Files() { Videos = videos, Subtitles = subtitles };
         var mapper = new SVSN.Mapper();
         var mapResult = mapper.Map(files);
 
@@ -79,8 +75,7 @@ public class MapperUnitTest
     }
 
     [Fact]
-    public void Test4()
-    {
+    public void Test4() {
         string[] videos = [
             "awesome drama_720p S04E01.mp4",
             "awesome drama_720p S04E02.mp4",
@@ -97,13 +92,12 @@ public class MapperUnitTest
             "Awesome_drama season_4 episode_5.ass",
             "Awesome_drama season_4 episode_6.ass",
         ];
-        var files = new SVSN.Files() {Videos = videos, Subtitles = subtitles};
+        var files = new SVSN.Files() { Videos = videos, Subtitles = subtitles };
         var mapper = new SVSN.Mapper();
         var mapResult = mapper.Map(files);
 
-        // 720: 5 4: 5 -> since 720 appears first, it takes precedence.
         Assert.Equal(6, mapResult.Count);
-        for(int i = 0;i < 6;++i) {
+        for (int i = 0; i < 6; ++i) {
             var video = videos[i];
             var subtitle = subtitles[i];
             Assert.Equal(mapResult[subtitle], video);
