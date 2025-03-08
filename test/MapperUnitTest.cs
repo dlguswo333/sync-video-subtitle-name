@@ -103,4 +103,37 @@ public class MapperUnitTest {
             Assert.Equal(mapResult[subtitle], video);
         }
     }
+
+    [Fact]
+    public void Test5() {
+        string[] videos = [
+            "nonumber.mp4",
+        ];
+        string[] subtitles = [
+            "nonumber.ass",
+        ];
+        var files = new SVSN.Files() { Videos = videos, Subtitles = subtitles };
+        var mapper = new SVSN.Mapper();
+        var mapResult = mapper.Map(files);
+
+        Assert.Empty(mapResult);
+    }
+
+    [Fact]
+    public void Test6() {
+        string[] videos = [
+            "movie s01-e2.mp4",
+            "movie s01-e1.mp4",
+        ];
+        string[] subtitles = [
+            "subtitle s3-e1.ass",
+            "subtitle s1-e1.ass",
+        ];
+        var files = new SVSN.Files() { Videos = videos, Subtitles = subtitles };
+        var mapper = new SVSN.Mapper();
+        var mapResult = mapper.Map(files);
+
+        Assert.Single(mapResult);
+        Assert.Equal(mapResult[subtitles[1]], videos[1]);
+    }
 }
