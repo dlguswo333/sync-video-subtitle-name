@@ -1,0 +1,46 @@
+name: dotnet publish
+on:
+  # Runs on releases.
+  release:
+    types: [created]
+
+  # Allows you to run this workflow manually from the Actions tab
+  # This event will only trigger a workflow run if the workflow file is on the default branch.
+  workflow_dispatch:
+
+jobs:
+  publish-linux-x64:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8'
+      - name: Publish
+        run: dotnet publish
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-video-subtitle-name-linux-x64
+          path: bin/Release/net8.0/linux-x64/publish/sync-video-subtitle-name
+          if-no-files-found: 'error'
+
+  publish-win-x64:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8'
+      - name: Publish
+        run: dotnet publish
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-video-subtitle-name-win-x64.exe
+          path: bin/Release/net8.0/win-x64/publish/sync-video-subtitle-name.exe
+          if-no-files-found: 'error'
