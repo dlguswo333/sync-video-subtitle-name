@@ -80,7 +80,7 @@ public class Mapper : IMapper {
         // such as number in the series or resolution;
         // and the number coincides with the number we actually want.
         // In this case, we get the number with the most occurrence in 'nums' array.
-        var numsWithOccurrence = nums.Distinct().ToDictionary(v => nums.Count(_v => _v == v));
+        var numsWithOccurrence = nums.Distinct().ToDictionary(v => v, v => nums.Count(_v => _v == v));
         var candidateNum = new KeyValuePair<double, int>(double.NaN, 0);
         for (int i = 0; i < nums.Length; ++i) {
             var num = nums[i];
