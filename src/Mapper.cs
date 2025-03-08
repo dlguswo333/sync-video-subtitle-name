@@ -54,18 +54,45 @@ public class Mapper : IMapper {
     }
 
     private double GetMostDistinctNum(double[] nums, double[][] numsArray) {
-        int[] occurrenceCnt = new int[nums.Length];
+        int[] occurrenceInOtherNums = new int[nums.Length];
+        double mostDistinctNum;
         for (int i = 0;i < nums.Length;++i) {
             var num = nums[i];
             for (int j = 0;j < numsArray.Length;++j) {
                 if (nums == numsArray[j]) {
                     continue;
                 }
-                occurrenceCnt[i] += numsArray[j].Count(value => value == num);
+                occurrenceInOtherNums[i] += numsArray[j].Count(value => value == num);
             }
         }
-        var minOccurrenceInd = Array.IndexOf(occurrenceCnt, occurrenceCnt.Min());
-        var mostDistinctNum = nums[minOccurrenceInd];
+        // The # of numbers with minimum occurrence.
+        var numsCntWithMinOccurrence = occurrenceInOtherNums.Count(
+            value => value == occurrenceInOtherNums.Min()
+        );
+        if (numsCntWithMinOccurrence == 1){
+            var minOccurrenceInd = Array.IndexOf(occurrenceInOtherNums, occurrenceInOtherNums.Min());
+            mostDistinctNum = nums[minOccurrenceInd];
+            return mostDistinctNum;
+        }
+
+        // If there are multiple nums with minimum occurences, things get complicated.
+        // It maybe because there are numbers in the base file name
+        // such as number in the series or resolution;
+        // and the number coincides with the number we actually want.
+        // In this case, we get the number with the most occurrence in 'nums' array.
+        var numsWithOccurrence = nums.Distinct().ToDictionary(v => nums.Count(_v => _v == v));
+        var candidateNum = new KeyValuePair<double, int>(double.NaN, 0);
+        for(int i = 0;i < nums.Length;++i) {
+            var num = nums[i];
+            if (occurrenceInOtherNums[i] > occurrenceInOtherNums.Min()) {
+                continue;
+            }
+            var occurrenceInNums = nums.Count(v => v == num);
+            if (occurrenceInNums > candidateNum.Value) {
+                candidateNum = new KeyValuePair<double, int>(num, occurrenceInNums);
+            }
+        }
+        mostDistinctNum = candidateNum.Key;
         return mostDistinctNum;
     }
 }
