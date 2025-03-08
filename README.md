@@ -2,12 +2,12 @@
 This project is a simple, lightweight console application
 that synchronizes subtitle file names to video file names.
 
-Built in `java` language, distributed in `JAR` executable format,
-so you need Java Runtime Environment to run. Recommend JRE 11 or above.
+Built in `dotnet` language, distributed in AOT executable format,
+so you don't need any external runtime. Simply run the executable from your terminal.
 
 ## Logics
-Even if video files and subtitle files are named different,
-those names have one thing in common: **They have episode number in it**.
+As long as we correctly sort video files and subtitle files,
+there is high probability that they will be correctly matched.
 
 > - video files:
 >     - awesome drama S**01**E**01**.mp4
@@ -16,20 +16,17 @@ those names have one thing in common: **They have episode number in it**.
 >
 > - subtitle files:
 >     - Awesome_drama season_**1** episode_**1**.ass
->     - Awesome_drama season_**1** episode_**2**.ass
 >     - Awesome_drama season_**1** episode_**3**.ass
 
-The program asks user index starting from the left of the number to use,
-uses it to synchronize subtitle file names.
+The program finds out the most non-overlapping numbers from file names
+and use them to index the files internally.
 
 In above example, since the number the program wants is
-the second occurrence of the number in file name, insert **2**.
+the second occurrence of the number in file names;
+the numbers from the videos are `1`, `2`, `3` and
+the numbers from the subtitles are `1` and `3`.
+There is no `2` from subtitles so there is no match for the second video file.
 
 The program will then show the preview of synchronization results and
-ask you if this is the result you want. Since the program cannot detect
-duplicated episode video/subtitle files and 1 to N mapping errors,
-watch the preview carefully.
-
-> ⚠️ If the indices of the number in video/subtitle file names
-> do not match (such as _\[1080p\]awesome drama E1.mp4_ and _awesome drama E1.ass_),
-> this program will not work.
+ask you if this is the result you want.
+Since the program may have errors, watch the preview carefully.
