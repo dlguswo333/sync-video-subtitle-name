@@ -6,7 +6,7 @@ interface IMapper {
     public SortedDictionary<string, string> Map(Files files);
 }
 
-class Mapper : IMapper {
+public class Mapper : IMapper {
     public SortedDictionary<string, string> Map(Files files) {
         var numsArrayInVideos = files.Videos.Select(this.GetNumsFromFilePath).ToArray();
         var numsArrayInSubtitles = files.Subtitles.Select(this.GetNumsFromFilePath).ToArray();

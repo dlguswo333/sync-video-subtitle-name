@@ -4,7 +4,7 @@ interface IFileReader {
     public Files? Read(string path);
 }
 
-class FileReader : IFileReader {
+public class FileReader : IFileReader {
     static private readonly string[] VideoExtensions = ["avi", "mp4", "mkv", "m4v", "mov"];
     static private readonly string[] SubtitleExtensions = ["smi", "ass"];
 
