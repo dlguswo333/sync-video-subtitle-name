@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8'
-      - name: Lint dotnet
-        run: dotnet lint ./sync-video-subtitle-name.csproj --verify-no-changes
+      - name: Format dotnet
+        run: dotnet format ./sync-video-subtitle-name.csproj --verify-no-changes
       - name: Test dotnet
         run: dotnet test
