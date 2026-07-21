@@ -6,7 +6,7 @@ interface IFileReader {
 
 public class FileReader : IFileReader {
     static private readonly string[] VideoExtensions = ["avi", "mp4", "mkv", "m4v", "mov"];
-    static private readonly string[] SubtitleExtensions = ["smi", "ass"];
+    static private readonly string[] SubtitleExtensions = ["smi", "ass", "srt"];
 
     public Files? Read(string path) {
         try {
